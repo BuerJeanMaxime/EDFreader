@@ -1,2 +1,2 @@
 # EDFreader
-code for extracting data from edf gile
+code for extracting data from edf file
