@@ -1,9 +1,13 @@
+import datetime
 import os
 import unittest
+
+from numpy import array
 
 from App.mne_reader.mne_reader import MNEReader
 
 cwd = os.getcwd()
+
 
 class TestMNEReader(unittest.TestCase):
 
@@ -14,7 +18,7 @@ class TestMNEReader(unittest.TestCase):
         }
 
     def test_read_edf_file_mne(self):
-        raw_edf = MNEReader.read_edf_file_mne(cwd+"/../../Data/DreemCPAP_test_file.edf")
+        raw_edf = MNEReader.read_edf_file_mne(cwd + "/../../Data/DreemCPAP_test_file.edf")
         output = self.helper_assert_read_edf_file(raw_edf)
         expected = {'ch_names': ['Accelero Norm',
                                  'EEG F7-O1',
@@ -28,3 +32,9 @@ class TestMNEReader(unittest.TestCase):
                                  'Respiration z'],
                     'nchan': 10}
         self.assertEqual(expected, output)
+
+    def test_read_edf_file_pyedflib(self):
+        signals, signal_headers, header = MNEReader.read_edf_file_pyedflib(cwd + "/../../Data/DreemCPAP_test_file.edf")
+        output = [signals, signal_headers, header]
+        expected = 3
+        self.assertEqual(expected, len(output))
