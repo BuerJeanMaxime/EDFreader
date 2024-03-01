@@ -1,8 +1,5 @@
-import datetime
 import os
 import unittest
-
-from numpy import array
 
 from App.mne_reader.mne_reader import MNEReader
 
