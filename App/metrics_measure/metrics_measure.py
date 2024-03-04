@@ -1,6 +1,6 @@
-from pyedflib import highlevel
+import numpy as np
 
-from App.custom_types import FloatArray, IntArray
+from App.custom_types import FloatArray
 from App.mne_reader.mne_reader import MNEReader
 
 
@@ -19,8 +19,8 @@ class MetricsMeasure:
         # Calculate the duration
         duration_seconds: float = num_samples / sample_frequency
         # Detect apneas and hypopneas
-        apnea_events: IntArray = (airflow_signal < apnea_threshold).astype(int)
-        hypopnea_events: float = ((airflow_signal >= apnea_threshold) & (airflow_signal < hypopnea_threshold)).astype(int)
+        apnea_events: np.array = (airflow_signal < apnea_threshold).astype(int)
+        hypopnea_events: np.array = ((airflow_signal >= apnea_threshold) & (airflow_signal < hypopnea_threshold)).astype(int)
 
         total_apneas: int = apnea_events.sum()
         total_hypopneas: int = hypopnea_events.sum()
