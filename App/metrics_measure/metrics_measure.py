@@ -29,3 +29,31 @@ class MetricsMeasure:
         ahi: float = (total_apneas + total_hypopneas) / total_sleep_time_hours * 60
         return ahi
 
+    @staticmethod
+    def compute_RDI(path):
+
+        def detect_apneas_hypopneas_reras(airflow_data=None, thoracic_data=None, abdominal_data=None):
+            apneas_hypopneas_reras = 1
+            #need help
+            return apneas_hypopneas_reras
+
+        signals, signal_headers, header = MNEReader.read_edf_file_pyedflib(path)
+
+        # Read data from relevant channels
+        airflow_data = signals[0]
+        thoracic_data = signals[1]
+        abdominal_data = signals[2]
+
+        num_samples: int = len(signals[0])
+        sample_frequency: float = signal_headers[0]['sample_rate']
+
+        # Example: Compute the RDI (sum of apneas, hypopneas, and RERAs per hour)
+        apneas_hypopneas_reras = detect_apneas_hypopneas_reras(airflow_data, thoracic_data, abdominal_data)
+        total_events = len(apneas_hypopneas_reras)
+
+        # Assuming the recording duration is in seconds
+        recording_duration_hours = num_samples / sample_frequency
+
+        RDI = (total_events / recording_duration_hours)
+
+        return RDI
